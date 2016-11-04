@@ -1,2 +1,1 @@
-# a2-resume
-My Resume as Angular2 Application
+### My interactive resume written in Angular2 using webpack structure by AngularClass

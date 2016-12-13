@@ -6,6 +6,7 @@ export const routes: RouterConfig = [
   { path: '',      component: 'About' },
   { path: 'about/:cmd', component: 'About' },
   { path: 'projects', component: 'Projects' },
+  { path: 'samples', component: 'Samples' },
   { path: '**',    component: 'About' }
 ];
 
@@ -16,7 +17,8 @@ export const routes: RouterConfig = [
 export const asyncRoutes: AsyncRoutes = {
   // we have to use the alternative syntax for es6-promise-loader to grab the routes
   'About': require('es6-promise-loader!./about'),
-  'Projects': require('es6-promise-loader!./projects')
+  'Projects': require('es6-promise-loader!./projects'),
+  'Samples': require('es6-promise-loader!./samples')
 };
 
 
@@ -24,7 +26,8 @@ export const asyncRoutes: AsyncRoutes = {
 // An array of callbacks to be invoked after bootstrap to prefetch async routes
 export const prefetchRouteCallbacks: Array<IdleCallbacks> = [
   asyncRoutes['About'],
-  asyncRoutes['Projects']
+  asyncRoutes['Projects'],
+  asyncRoutes['Samples']
    // es6-promise-loader returns a function
 ];
 

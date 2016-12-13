@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class Command {
 
-	private commands = [/projects?\s*?$/i, /home\s*?$/i, /about\s*?$/i, /help\s*?$/i, /instructions?\s*?$/i];
+	private commands = [/projects?\s*?$/i, /home\s*?$/i, /about\s*?$/i, /help\s*?$/i, /instructions?\s*?$/i,  /samples?\s*?$/i,  /examples?\s*?$/i];
 	public terminal: any;
 	private animating = false;
 
@@ -69,6 +69,7 @@ export class Command {
 		var help = 'Available commands:\n'
 				+  '[[b;yellow;black]about]: Information about me\n'
 				+  '[[b;yellow;black]projects]: Information about projects and lab\n'
+				+  '[[b;yellow;black]samples/examples]: Live project samples\n'
 				+  '[[b;yellow;black]help] / [[b;yellow;black]instruction(s)]: Display this help\n'
 				+  '[[b;yellow;black]home]: Back to initial route';
 
@@ -103,6 +104,10 @@ export class Command {
 		
 		if (/projects?/i.test(arg)) {
 			result.route = '/projects';
+		}
+
+		if (/samples?/i.test(arg) || /examples?/i.test(arg)) {
+			result.route = '/samples';
 		}
 
 		return result;

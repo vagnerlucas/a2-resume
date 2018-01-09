@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { WritterService } from './writter.service';
+import { WriterService } from './writer.service';
 
 describe('WritterService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WritterService]
+      providers: [WriterService]
     });
   });
 
-  it('should be created', inject([WritterService], (service: WritterService) => {
+  it('should be created', inject([WriterService], (service: WriterService) => {
     expect(service).toBeTruthy();
   }));
 });

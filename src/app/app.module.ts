@@ -4,6 +4,8 @@ import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
+// import { CommandService } from './services/command.service';
+// import { WriterService } from './services/writer.service';
 
 const routes: Routes = [
   {

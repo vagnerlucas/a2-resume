@@ -1,1 +1,426 @@
-/* You can add global styles to this file, and also import other style files */
+/*!
+ *       __ _____                     ________                              __
+ *      / // _  /__ __ _____ ___ __ _/__  ___/__ ___ ______ __ __  __ ___  / /
+ *  __ / // // // // // _  // _// // / / // _  // _//     // //  \/ // _ \/ /
+ * /  / // // // // // ___// / / // / / // ___// / / / / // // /\  // // / /__
+ * \___//____ \\___//____//_/ _\_  / /_//____//_/ /_/ /_//_//_/ /_/ \__\_\___/
+ *           \/              /____/                              version 0.10.12
+ * http://terminal.jcubic.pl
+ *
+ * This file is part of jQuery Terminal.
+ *
+ * Copyright (c) 2011-2016 Jakub Jankiewicz <http://jcubic.pl>
+ * Released under the MIT license
+ *
+ * Date: Thu, 16 Jun 2016 09:24:01 +0000
+ */
+
+ .terminal .terminal-output .format {
+    display: inline-block;
+  }
+  
+  .cmd {
+    .format {
+      display: inline-block;
+    }
+    .prompt {
+      display: inline-block;
+      div {
+        display: inline-block;
+      }
+    }
+  }
+  
+  .terminal {
+    .terminal-output div div {
+      display: inline-block;
+    }
+    h1, h2, h3, h4, h5, h6, pre {
+      margin: 0;
+    }
+  }
+  
+  .cmd {
+    margin: 0;
+  }
+  
+  .terminal {
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.2em;
+    }
+  }
+  
+  .cmd .clipboard {
+    position: absolute;
+    height: 16px;
+    left: -6px;
+    width: 5px;
+    background: transparent;
+    border: 0;
+    color: transparent;
+    outline: 0;
+    padding: 0;
+    resize: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .terminal {
+    .error {
+      color: red;
+    }
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+  }
+  
+  .cmd {
+    padding: 0;
+    height: 1.3em;
+    position: relative;
+  }
+  
+  .terminal .inverted {
+    background-color: #aaa;
+    color: #000;
+  }
+  
+  .cmd {
+    .inverted {
+      background-color: #aaa;
+      color: #000;
+    }
+    .cursor.blink {
+      background-color: #aaa;
+      color: #000;
+      -webkit-animation: terminal-blink 1s infinite steps(1, start);
+      -moz-animation: terminal-blink 1s infinite steps(1, start);
+      -ms-animation: terminal-blink 1s infinite steps(1, start);
+      animation: terminal-blink 1s infinite steps(1, start);
+    }
+  }
+  
+  @-webkit-keyframes terminal-blink {
+    0%,100% {
+      background-color: #000;
+      color: #aaa;
+    }
+  
+    50% {
+      background-color: #bbb;
+      color: #000;
+    }
+  }
+  
+  
+  @-ms-keyframes terminal-blink {
+    0%,100% {
+      background-color: #000;
+      color: #aaa;
+    }
+  
+    50% {
+      background-color: #bbb;
+      color: #000;
+    }
+  }
+  
+  
+  @-moz-keyframes terminal-blink {
+    0%,100% {
+      background-color: #000;
+      color: #aaa;
+    }
+  
+    50% {
+      background-color: #bbb;
+      color: #000;
+    }
+  }
+  
+  
+  @keyframes terminal-blink {
+    0%,100% {
+      background-color: #000;
+      color: #aaa;
+    }
+  
+    50% {
+      background-color: #bbb;
+      color: #000;
+    }
+  }
+  
+  
+  .terminal .terminal-output div div {
+    display: block;
+    line-height: 14px;
+    height: auto;
+  }
+  
+  .cmd .prompt {
+    display: block;
+    line-height: 14px;
+    height: auto;
+    float: left;
+  }
+  
+  .terminal, .cmd {
+    font-family: monospace;
+    color: #aaa;
+    background-color: #000;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  
+  .terminal-output > div {
+    min-height: 14px;
+  }
+  
+  .terminal .terminal-output div span {
+    display: inline-block;
+  }
+  
+  .cmd span {
+    float: left;
+  }
+  
+  .terminal-output {
+    span, a {
+      -webkit-touch-callout: initial;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+    }
+  }
+  
+  .cmd {
+    div, span {
+      -webkit-touch-callout: initial;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+    }
+  }
+  
+  .terminal {
+    td, pre, h1, h2, h3, h4, h5, h6 {
+      -webkit-touch-callout: initial;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+    }
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .terminal-output {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    div {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  }
+  
+  @-moz-document url-prefix() {
+    .terminal {
+      -webkit-touch-callout: initial;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+    }
+    .terminal-output {
+      -webkit-touch-callout: initial;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+      div {
+        -webkit-touch-callout: initial;
+        -webkit-user-select: initial;
+        -khtml-user-select: initial;
+        -moz-user-select: initial;
+        -ms-user-select: initial;
+        user-select: initial;
+      }
+    }
+  }
+  
+  
+  .terminal {
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      border: 1px solid #aaa;
+    }
+    h1::-moz-selection, h2::-moz-selection, h3::-moz-selection, h4::-moz-selection, h5::-moz-selection, h6::-moz-selection, pre::-moz-selection, td::-moz-selection {
+      background-color: #aaa;
+      color: #000;
+    }
+    .terminal-output div {
+      div::-moz-selection, span::-moz-selection, div a::-moz-selection {
+        background-color: #aaa;
+        color: #000;
+      }
+    }
+  }
+  
+  .cmd {
+    div::-moz-selection, > span::-moz-selection, .prompt span::-moz-selection {
+      background-color: #aaa;
+      color: #000;
+    }
+  }
+  
+  .terminal {
+    h1::selection, h2::selection, h3::selection, h4::selection, h5::selection, h6::selection, pre::selection, td::selection {
+      background-color: #aaa;
+      color: #000;
+    }
+    .terminal-output div {
+      div {
+        &::selection, a::selection {
+          background-color: #aaa;
+          color: #000;
+        }
+      }
+      span::selection {
+        background-color: #aaa;
+        color: #000;
+      }
+    }
+  }
+  
+  .cmd {
+    div::selection, > span::selection, .prompt span::selection {
+      background-color: #aaa;
+      color: #000;
+    }
+  }
+  
+  .terminal .terminal-output div.error {
+    color: red;
+    div {
+      color: red;
+    }
+  }
+  
+  .tilda {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+  }
+  
+  .clear {
+    clear: both;
+  }
+  
+  .terminal a {
+    color: #0f60ff;
+    &:hover {
+      color: red;
+    }
+  }
+  
+  body {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+  }
+  
+  .terminal-output, .cmd {
+    font-family: 'Source Code Pro', monospace;
+  }
+  
+  .terminal-container {
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    float: left;
+    width: 100%;
+    padding: 0 10px 10px;
+    background: black;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    line-height: 10px;
+  }
+  
+  .content-container {
+    float: right;
+    width: 55%;
+    text-align: left;
+    font-family: 'Source Code Pro', monospace;
+    color: #000;
+  }
+  
+  .command {
+    color: gray;
+  }
+  
+  p, h1 {
+    color: #bbbbbb;
+  }
+  
+  div.default {
+    font-family: 'Source Code Pro', monospace;
+    color: white;
+    text-align: left;
+  }
+  
+  .about {
+    float: left;
+    padding: 10px;
+  }
+  
+  .avatar {
+    font-size: 9px;
+    display: block;
+    float: left;
+    margin-right: 8px;
+  }
+  
+  .bio {
+    float: left;
+    pre {
+      margin: 0;
+    }
+  }
+  
+  .bio-sm {
+    display: block;
+    float: left;
+    width: 500px;
+    font-size: 12px;
+    font-family: 'Source Code Pro', monospace;
+    color: white;
+  }

@@ -4,110 +4,117 @@ import { Router } from '@angular/router';
 @Injectable()
 export class CommandService {
 
-  private commands = [/projects?\s*?$/i, /home\s*?$/i, /about\s*?$/i, /help\s*?$/i, /instructions?\s*?$/i,  /samples?\s*?$/i,  /examples?\s*?$/i];
-	public terminal: any;
-	private animating = false;
+  private commands = [/projects?\s*?$/i,
+                      /home\s*?$/i,
+                      /about\s*?$/i,
+                      /help\s*?$/i,
+                      /instructions?\s*?$/i,
+                      /samples?\s*?$/i,
+                      /examples?\s*?$/i];
 
-	constructor(private router: Router) { }
+  public terminal: any;
+  private animating = false;
 
-	public isAnimating = () => {
-		return this.animating;
-	}
+  constructor(private router: Router) { }
 
-	private callRoute(route: string) {
-		this.router.navigate([route]);
-	}
+  public isAnimating = () => {
+    return this.animating;
+  }
 
-	public echo = (msg: string) => {
-		this.terminal.echo(msg);
-	}
+  private callRoute(route: string) {
+    this.router.navigate([route]);
+  }
 
-	public drawLine = (col?: number) => {
+  public echo = (msg: string) => {
+    this.terminal.echo(msg);
+  }
 
-		col = col || 80;
+  public drawLine = (col?: number) => {
 
-		var line = '';
-		for (var i = 0; i <= col - 1; i++)
-			line += '-';
+    col = col || 80;
 
-		this.terminal.echo(line);
-	}
+    let line = '';
+    for (let i = 0; i <= col - 1; i++) {
+      line += '-';
+    }
 
-	public animateEcho = (msg: string, interval: number) => {
-		this.animating = true;
-		this.terminal.set_command('');
-		interval = interval || 25;
-		msg.split('').forEach((s, i) => {
-			setTimeout(() => {
-				this.terminal.insert(s);
-			}, i * interval);
-		});
-		setTimeout(() => {
-			this.animating = false;
-		}, interval * msg.length + 50);
-	}
+    this.terminal.echo(line);
+  }
 
-	private isCommand = (arg: string) => {
-		var result = false;
-		this.commands.forEach((c) => {
-			if (c.test(arg)) {
-				result = true;
-				return;
-			}
+  public animateEcho = (msg: string, interval: number = 25) => {
+    this.animating = true;
+    this.terminal.set_command('');
 
-		});
-		return result;
-	}
+    msg.split('').forEach((s, i) => {
+      setTimeout(() => {
+        this.terminal.insert(s);
+      }, i * interval);
+    });
+    setTimeout(() => {
+      this.animating = false;
+    }, interval * msg.length + 50);
+  }
 
-	public parseCommand = (command: string) => {
+  private isCommand = (arg: string) => {
+    let result = false;
+    this.commands.forEach((c) => {
+      if (c.test(arg)) {
+        result = true;
+        return;
+      }
 
-		var vm = this;
+    });
+    return result;
+  }
 
-		var help = 'Available commands:\n'
-				+  '[[b;yellow;black]about]: Information about me\n'
-				+  '[[b;yellow;black]projects]: Information about projects and lab\n'
-				+  '[[b;yellow;black]samples/examples]: Live project samples\n'
-				+  '[[b;yellow;black]help] / [[b;yellow;black]instruction(s)]: Display this help\n'
-				+  '[[b;yellow;black]home]: Back to initial route';
+  public parseCommand = (command: string) => {
 
-		if (this.isCommand(command)) {
-			
-			if ((/help\s*?$/i.test(command)) || (/instructions?\s*?$/i.test(command))) {
-				vm.terminal.echo(help);
-			}
+    const vm = this;
 
-			var commandRoute = this.getCommandRoute(command.trim());
+    const help = 'Available commands:\n'
+      + '[[b;yellow;black]about]: Information about me\n'
+      + '[[b;yellow;black]projects]: Information about projects and lab\n'
+      + '[[b;yellow;black]samples/examples]: Live project samples\n'
+      + '[[b;yellow;black]help] / [[b;yellow;black]instruction(s)]: Display this help\n'
+      + '[[b;yellow;black]home]: Back to initial route';
 
-			if (commandRoute.args)
-				this.callRoute(commandRoute.route + commandRoute.args);
-			else
-				this.callRoute(commandRoute.route);
-		}
-		else {
-			vm.terminal.echo('Command not found.\nTry either [[b;yellow;black]help] or [[b;yellow;black]instructions] to see available commands');
-		}
-	}
+    if (this.isCommand(command)) {
 
-	private getCommandRoute(arg: string) {
-		var result = {
-			route: '/',
-			args: null
-		};
+      if ((/help\s*?$/i.test(command)) || (/instructions?\s*?$/i.test(command))) {
+      vm.terminal.echo(help);
+      }
+      const commandRoute = this.getCommandRoute(command.trim());
 
-		if (/about/i.test(arg)) {
-			result.route = '/about';
-			result.args = '/run';
-		}
-		
-		if (/projects?/i.test(arg)) {
-			result.route = '/projects';
-		}
+      if (commandRoute.args) {
+        this.callRoute(commandRoute.route + commandRoute.args);
+      } else {
+        this.callRoute(commandRoute.route);
+      }
+    } else {
+      vm.terminal.echo('Command not found.\nTry either [[b;yellow;black]help] or [[b;yellow;black]instructions] to see available commands');
+    }
+  }
 
-		if (/samples?/i.test(arg) || /examples?/i.test(arg)) {
-			result.route = '/samples';
-		}
+  private getCommandRoute(arg: string) {
+    const result = {
+      route: '/',
+      args: null
+    };
 
-		return result;
-	}
+    if (/about/i.test(arg)) {
+      result.route = '/about';
+      result.args = '/run';
+    }
+
+    if (/projects?/i.test(arg)) {
+      result.route = '/projects';
+    }
+
+    if (/samples?/i.test(arg) || /examples?/i.test(arg)) {
+      result.route = '/samples';
+    }
+
+    return result;
+  }
 
 }

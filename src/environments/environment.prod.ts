@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API_ADDR: 'http://api.vagnerlucas.com/'  
+  API_ADDR: 'http://api.vagnerlucas.com/'
 };

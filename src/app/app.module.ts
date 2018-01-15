@@ -4,8 +4,8 @@ import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
-// import { CommandService } from './services/command.service';
-// import { WriterService } from './services/writer.service';
+import { CommandService } from './services/command.service';
+import { WriterService } from './services/writer.service';
 
 const routes: Routes = [
   {
@@ -17,7 +17,6 @@ const routes: Routes = [
     component: AboutComponent
   },
 ];
-
 
 @NgModule({
   declarations: [
@@ -31,7 +30,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'resume-app' }),
     HttpModule
   ],
-  providers: [],
+  providers: [CommandService, WriterService],
   bootstrap: [AppComponent]
 })
 

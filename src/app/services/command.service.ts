@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 export class CommandService {
 
   private commands = [/projects?\s*?$/i,
-                      /home\s*?$/i,
-                      /about\s*?$/i,
-                      /help\s*?$/i,
-                      /instructions?\s*?$/i,
-                      /samples?\s*?$/i,
-                      /examples?\s*?$/i];
+    /home\s*?$/i,
+    /about\s*?$/i,
+    /help\s*?$/i,
+    /instructions?\s*?$/i,
+    /samples?\s*?$/i,
+    /examples?\s*?$/i,
+    /ellen?\s*?$/i];
 
   public terminal: any;
   private animating = false;
@@ -81,7 +82,7 @@ export class CommandService {
     if (this.isCommand(command)) {
 
       if ((/help\s*?$/i.test(command)) || (/instructions?\s*?$/i.test(command))) {
-      vm.terminal.echo(help);
+        vm.terminal.echo(help);
       }
       const commandRoute = this.getCommandRoute(command.trim());
 
@@ -104,6 +105,11 @@ export class CommandService {
     if (/about/i.test(arg)) {
       result.route = '/about';
       result.args = '/run';
+    }
+
+    if (/ellen/i.test(arg)) {
+      result.route = '/about';
+      result.args = '/ellen';
     }
 
     if (/projects?/i.test(arg)) {

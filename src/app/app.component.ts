@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { CommandService } from './services/command.service';
-import { WriterService } from './services/writer.service';
-import '../assets/js/jquery.terminal-0.10.12.min.js';
+import { CommandService, WriterService } from './services/';
 
 declare const jQuery: any;
+declare const ga: any;
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,14 @@ export class AppComponent implements OnInit {
 
   private terminal: any;
 
-  constructor(private command: CommandService, private writer: WriterService, private router: Router) { }
+  constructor(private command: CommandService, private writer: WriterService, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        ga('set', 'page', event.urlAfterRedirects);
+        ga('send', 'pageview');
+      }
+    });
+   }
 
   private tryResolve(cmd) {
     this.command.parseCommand(cmd);

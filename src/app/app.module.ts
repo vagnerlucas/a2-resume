@@ -6,11 +6,22 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { CommandService } from './services/command.service';
 import { WriterService } from './services/writer.service';
+import { ProjectsComponent } from './projects/projects.component';
+import { SamplesComponent } from './samples/samples.component';
+import { GoogleAnalyticsEventsService } from './services/google-analytics-events.service';
 
 const routes: Routes = [
   {
     path: 'about/:cmd',
     component: AboutComponent
+  },
+  {
+    path: 'projects',
+    component: ProjectsComponent
+  },
+  {
+    path: 'samples',
+    component: SamplesComponent
   },
   {
     path: '**',
@@ -21,7 +32,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponent
+    AboutComponent,
+    ProjectsComponent,
+    SamplesComponent
   ],
   imports: [
     RouterModule,
@@ -30,7 +43,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'resume-app' }),
     HttpModule
   ],
-  providers: [CommandService, WriterService],
+  providers: [CommandService, WriterService, GoogleAnalyticsEventsService],
   bootstrap: [AppComponent]
 })
 

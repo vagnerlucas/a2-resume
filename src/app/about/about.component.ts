@@ -1,11 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-import { AboutService } from '../services/about.service';
-import { HttpService } from '../services/http.service';
-import { AboutModel } from '../models/about-model';
-import { CommandService } from '../services/command.service';
-import { WriterService } from '../services/writer.service';
+import { HttpService, AboutService, CommandService, WriterService, GoogleAnalyticsEventsService } from '../services/';
+import { AboutModel } from '../models/';
+
+declare const ga: any;
 
 @Component({
   template: '',
@@ -18,10 +17,25 @@ export class AboutComponent implements OnInit {
     return this.activatedRoute.snapshot.paramMap.get(param);
   }
 
+  private submitEvent = () => {
+    this.googleAnalyticsEvent.emitEvent('About', 'AboutAction', 'About', 10);
+  }
+
   constructor(private activatedRoute: ActivatedRoute,
-              private about: AboutService,
-              @Inject(CommandService) private command: CommandService,
-              @Inject(WriterService) private writer: WriterService) { this.tryParseCommand(); }
+    private about: AboutService,
+    private router: Router,
+    @Inject(CommandService) private command: CommandService,
+    @Inject(WriterService) private writer: WriterService,
+    private googleAnalyticsEvent: GoogleAnalyticsEventsService) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        ga('set', 'page', event.urlAfterRedirects);
+        ga('send', 'pageview');
+      }
+    });
+    this.submitEvent();
+    this.tryParseCommand();
+  }
 
   private drawAbout = (aboutModel: AboutModel) => {
 
@@ -45,7 +59,7 @@ export class AboutComponent implements OnInit {
       let tempStr = '';
       aboutModel.contacts.forEach((e) => {
         Object.keys(e).forEach((f) => {
-          tempStr += `[[b;red;black]${f.toString() }]: [[b;black;gray]${e[f].toString() }]\n`;
+          tempStr += `[[b;red;black]${f.toString()}]: [[b;black;gray]${e[f].toString()}]\n`;
         });
       });
       this.command.echo(`\nContacts\n${tempStr}`);
@@ -55,7 +69,7 @@ export class AboutComponent implements OnInit {
       tempStr = '';
       aboutModel.skills.forEach((e, j) => {
         Object.keys(e).forEach((f, i) => {
-          tempStr += `[[b;red;black]${f.toString() }]: ${formatGauge(e[f].toString()) }\t`;
+          tempStr += `[[b;red;black]${f.toString()}]: ${formatGauge(e[f].toString())}\t`;
           if ((j + 1) % 4 === 0) {
             tempStr += '\n\n';
           }
@@ -67,12 +81,12 @@ export class AboutComponent implements OnInit {
       tempStr = '';
       aboutModel.social.forEach((e) => {
         Object.keys(e).forEach((f) => {
-          tempStr += `[[b;red;black]${f.toString() }]: ${e[f].toString() }\n`;
+          tempStr += `[[b;red;black]${f.toString()}]: ${e[f].toString()}\n`;
         });
       });
       this.command.echo(`\nSocial\n${tempStr}`);
       this.command.drawLine(100);
-      this.command.echo('\nProjects\n');
+      this.command.echo('\nProjects:\n');
       this.command.echo('Type [[b;yellow;black]projects] to see the list\n');
 
       setTimeout(() => {
@@ -81,13 +95,26 @@ export class AboutComponent implements OnInit {
     }
   }
 
+  private drawEllenMsg = () => {
+    setTimeout(() => {
+      this.command.drawLine(100);
+      this.command.animateEcho('She\'s just the love of my life\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤ (yep, 42!)\n', 50);
+    }, 600);
+  }
+
   private tryParseCommand = async () => {
     const parm = this.getParam('cmd');
     if (parm != null) {
-      const data = await this.about.getAbout();
-      if (data != null) {
+      if (/run?\s*?$/i.test(parm)) {
+        const data = await this.about.getAbout();
+        if (data != null) {
+          try {
+            this.drawAbout(data);
+          } catch (error) { }
+        }
+      } else if (/ellen?\s*?$/i.test(parm)) {
         try {
-          this.drawAbout(data);
+          this.drawEllenMsg();
         } catch (error) { }
       }
     }

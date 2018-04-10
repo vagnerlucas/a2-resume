@@ -30,7 +30,7 @@
     "core-js": "^2.5.5",
     "jquery": "^3.3.1",
     "rxjs": "^5.5.8",
-    "ts-loader": "^4.2.0",
+    "ts-loader": "^3.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

@@ -95,13 +95,6 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  private drawEllenMsg = () => {
-    setTimeout(() => {
-      this.command.drawLine(100);
-      this.command.animateEcho('She\'s just the love of my life\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤❤❤❤❤❤❤❤❤\n❤❤ (yep, 42!)\n', 50);
-    }, 600);
-  }
-
   private tryParseCommand = async () => {
     const parm = this.getParam('cmd');
     if (parm != null) {
@@ -112,10 +105,6 @@ export class AboutComponent implements OnInit {
             this.drawAbout(data);
           } catch (error) { }
         }
-      } else if (/ellen?\s*?$/i.test(parm)) {
-        try {
-          this.drawEllenMsg();
-        } catch (error) { }
       }
     }
   }

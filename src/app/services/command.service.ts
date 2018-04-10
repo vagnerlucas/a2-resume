@@ -10,8 +10,7 @@ export class CommandService {
     /help\s*?$/i,
     /instructions?\s*?$/i,
     /samples?\s*?$/i,
-    /examples?\s*?$/i,
-    /ellen?\s*?$/i];
+    /examples?\s*?$/i];
 
   public terminal: any;
   private animating = false;

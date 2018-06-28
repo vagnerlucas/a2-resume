@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap, NavigationEnd } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
 import { HttpService, AboutService, CommandService, WriterService, GoogleAnalyticsEventsService } from '../services/';
 import { AboutModel } from '../models/';
+// import { switchMap } from 'rxjs/operators';
 
 declare const ga: any;
 

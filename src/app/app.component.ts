@@ -7,8 +7,8 @@ declare const ga: any;
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
 })
 
 export class AppComponent implements OnInit {
@@ -32,10 +32,19 @@ export class AppComponent implements OnInit {
     this.command.terminal = t;
   }
 
+  clearInfo() {
+    this.writer.writeToElement('bio-greeting', '', 0, true, true)
+                 .writeToElement('vrl-title', '', 0, true, true)
+                 .writeToElement('vrl-info', '', 0, true, true)
+                 .writeToElement('profile-text', '', 0, true, true)
+                 .writeToElement('bio-footer', '', 0, true, true);
+  }
+
   ngOnInit() {
+    this.clearInfo();
     if (!this.writer.isWriting()) {
       this.writer.writeToElement('bio-greeting', 'Hello', 25, false, true)
-                 .writeToElement('vrl-title', 'Vagner Lucas', 35, false, true)
+                 .writeToElement('vrl-title', 'Vagner Lucas | IT Professional - Software Developer', 35, false, true)
                  .writeToElement('vrl-info', 'Back-end software developer, system analyst and tech lover', 45, false, true)
                  .writeToElement('profile-text', 'You can find information about my professional profile here', 45, false, true)
                  .writeToElement('bio-footer', 'Welcome to my webpage', 45, false, true);

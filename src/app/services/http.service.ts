@@ -2,7 +2,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
@@ -16,6 +16,6 @@ export class HttpService {
       const url = this.apiServerName + service;
       return this.http
                  .get(url, {headers: this.headers})
-                 .map(res => res.json());
+                 .pipe(map(res => res.json()));
   }
 }
